@@ -28,7 +28,7 @@ int main(int argc, char **argv)
 
     events = calloc(MAXEVENTS, sizeof(event));
 
-    for (;;)
+    while (1)
     {
         n = epoll_wait(efd, events, MAXEVENTS, -1);
         printf("epoll_wait wakeup\n");
@@ -86,7 +86,7 @@ int main(int argc, char **argv)
                     }
                     else
                     {
-                        for (i = 0; i < n; i++)
+                        for (i = 0; i < n; ++i)
                         {
                             buf[i] = rot13_char(buf[i]);
                         }
