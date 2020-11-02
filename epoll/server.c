@@ -86,10 +86,10 @@ int main(int argc, char **argv)
                     }
                     else
                     {
-                        for (i = 0; i < n; ++i)
-                        {
-                            buf[i] = rot13_char(buf[i]);
-                        }
+                        // for (i = 0; i < n; ++i)
+                        // {
+                        //     buf[i] = rot13_char(buf[i]);
+                        // }
 
                         if (write(socket_fd, buf, n) < 0)
                         {
