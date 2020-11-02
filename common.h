@@ -24,19 +24,23 @@
 #include <sys/ioctl.h>
 #include <pthread.h>
 
-#define SERV_PORT 43211
+#define SERV_PORT 12345
 #define MAXLINE 4096
 #define LISTENQ 1024
 #define BUFFER_SIZE 4096
 
 void make_nonblocking(int fd);
 
+void error(int, int, char *);
+
+int tcp_nonblocking_server_listen(int port);
+
+char rot13_char(char c);
+
 void make_nonblocking(int fd)
 {
     fcntl(fd, F_SETFL, O_NONBLOCK);
 }
-
-void error(int, int, char *);
 
 void error(int exit_code, int err_no, char *msg)
 {
@@ -50,8 +54,6 @@ void error(int exit_code, int err_no, char *msg)
     }
     exit(exit_code);
 }
-
-int tcp_nonblocking_server_listen(int port);
 
 int tcp_nonblocking_server_listen(int port)
 {
@@ -84,4 +86,14 @@ int tcp_nonblocking_server_listen(int port)
     signal(SIGPIPE, SIG_IGN);
 
     return listenfd;
+}
+
+char rot13_char(char c)
+{
+    if ((c >= 'a' && c <= 'm') || (c >= 'A' && c <= 'M'))
+        return c + 13;
+    else if ((c >= 'n' && c <= 'z') || (c >= 'N' && c <= 'Z'))
+        return c - 13;
+    else
+        return c;
 }
